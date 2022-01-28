@@ -16,14 +16,11 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-			$table->integer('user_id')->index()->unsigned()->nullable();
+            $table->foreignId('user_id')->nullable()->constrained('users');
 			$table->enum('status', ['to_do','in_progress','done'])->nullable(false)->default('to_do');
 			$table->timestamp('completed_at')->nullable();
             $table->timestamps();
         });
-		Schema::table('tasks', function (Blueprint $table) {
-			$table->foreign('user_id')->references('id')->on('users');
-		});
     }
 
     /**
